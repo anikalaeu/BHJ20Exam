@@ -1,37 +1,30 @@
 package by.belhard.j20.exam.manager;
 
 import by.belhard.j20.exam.manager.resources.Worker;
+import by.belhard.j20.exam.manager.services.BufRdr;
+import by.belhard.j20.exam.manager.services.DBManager.DBManager;
 import by.belhard.j20.exam.manager.services.WorkerService;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class UIMain {
 
 
     private static String infoBlock = "Annotation: \n " +
-           // "1. Add new Client \n " +
-            "2. Add new Object \n " +
-            "3. Add Worker on Object \n " +
-            "4. Auto-add Worker \n " +
-            "5. Get Worker info \n " +
-            "6. Get Object info \n" +
-            //"7. Get Client info \n" +
-            "8. Add new Worker to a list \n" +
-            "9. Get nearest StartDate \n" +
-            "10. Check working Status \n" +
-            "11. Count money";
+            "1. Add new Project \n " +
+            "2. Add Worker on Project \n " +
+            "3. Get Workers info \n " +
+            "4. Get Projects info \n" +
+            "5. Add new Worker to a list \n" +
+            "6. Get nearest StartDate \n" +
+            "7. Count money \n" +
+            "exit";
 
     public static void main(String[] args) {
 
-
-        //AddNewClient
-        //AddNewObject
-        //AddNewWorker
-        //GetObjectInfo
-        //getWorkerInfo
-        //getClientInfo
-        //GetStartDate
-        //Alarmas TimeBreak, HaveNoMoney
-        //Annotation
-        //Gannt
+        DBManager dbManager = new DBManager();
+        BufRdr rdr = new BufRdr();
 
 
 

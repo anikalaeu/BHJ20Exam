@@ -2,26 +2,32 @@ package by.belhard.j20.exam.manager.resources;
 
 public class Worker {
 
-    private String name;
+    private static int id;
+    private static String name;
+    private static int salary;
 
 
-    private int salary;
-    //link to obj
 
-    public Worker(String name, int salary) {
+
+    public Worker(int id, String name, int salary) {
+
+        this.id = id;
         this.name = name;
-
         this.salary = salary;
+
     }
 
 
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
-
-    public int getSalary() {
+    public static int getSalary() {
         return salary;
+    }
+
+    public static int getId() {
+        return id;
     }
 
     public void setSalary(int salary) {
