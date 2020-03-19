@@ -3,44 +3,40 @@ package by.belhard.j20.exam.manager.services;
 import by.belhard.j20.exam.manager.resources.Worker;
 import by.belhard.j20.exam.manager.services.DBManager.DBManager;
 
-public class WorkerService{
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+public class WorkerService {
+
+    private final static String INSERT_SQL = "insert into workers (name, salary) values (?, ?)";
 
     private DBManager dbManager;
-    private static BufRdr rdr;
 
-
-    public WorkerService () {
-
-        Worker worker = new Worker( Worker.getId(  ), Worker.getName(), Worker.getSalary() );
-
-    }
-    public void WorkerToBase () {
-
-
-
-    }
-
-    private WorkerService(DBManager dbManager) {
+    public WorkerService(final DBManager dbManager) {
         this.dbManager = dbManager;
-        rdr = new BufRdr();
     }
 
+    public long createWorker(String name, int salary) throws SQLException {
+        final PreparedStatement statement = dbManager.prepareStatement( INSERT_SQL, Statement.RETURN_GENERATED_KEYS );
+        statement.setString( 1, name );
+        statement.setInt( 2, salary );
 
+        int affectedRows = statement.executeUpdate();
 
-
-
-    //public void createWorker (){
-      //  dbManager.prepareStatement("insert ...")
-
-    //}
-
-   /* public void getUser(){
-        try {
-           ResultSet resultSet= connection.createStatement().executeQuery( "" );
-            resultSet.getBlob( 0 );
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (affectedRows == 0) {
+            throw new SQLException("Creating worker failed, no rows affected.");
         }
-    }*/
+
+        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                return generatedKeys.getLong(1);
+            } else {
+                throw new SQLException("Creating worker failed, no ID obtained.");
+            }
+        }
+    }
+
 }
+
